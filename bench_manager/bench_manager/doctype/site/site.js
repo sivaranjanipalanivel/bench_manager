@@ -123,7 +123,7 @@ frappe.ui.form.on('Site', {
 			frappe.call({
 				method: 'bench_manager.bench_manager.doctype.site.site.run_default_bench_command',
 				args: {
-					method:val.method, 
+					command:val.command, 
 					key: key,
 				}
 			});
