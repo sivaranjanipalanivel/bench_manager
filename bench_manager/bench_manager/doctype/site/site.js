@@ -71,6 +71,66 @@ frappe.ui.form.on('Site', {
 				caller: "migrate",
 			});
 		});
+				//by sivaranjani
+		frm.add_custom_button(__('Bench Execute'), function(){
+			console.log("execute")
+			var dialog = new frappe.ui.Dialog({
+						title: 'Bench Execute',
+						fields: [
+						{fieldname: 'method', fieldtype: 'Data', label: "Method", reqd: true},
+							{fieldname: 'args', fieldtype: 'Data', label: "Argument", reqd: false}
+						]
+					});
+			dialog.set_primary_action(__("Create"), () => {
+			let key = frappe.datetime.get_datetime_as_string();
+			var val=dialog.get_values();
+			if(val.value){
+				frappe.call({
+					method: 'bench_manager.bench_manager.doctype.site.site.execute_bench_command',
+					args: {
+						method:val.method, 
+						key: key,
+						args:val.value,
+					}
+				});
+			}
+			else{
+				frappe.call({
+					method: 'bench_manager.bench_manager.doctype.site.site.execute_bench_command',
+					args: {
+						method:val.method, 
+						key: key,
+					}
+				});
+			}
+			dialog.hide();
+			});
+			dialog.show();
+		});
+		//by sivaranjani
+		frm.add_custom_button(__('Execute Commands'), function(){
+		console.log("execute commands")
+		var dialog = new frappe.ui.Dialog({
+					title: 'Bench Execute',
+					fields: [
+					{fieldname: 'command', fieldtype: 'Data', label: "Command", reqd: true},
+						{fieldname: 'args', fieldtype: 'Data', label: "Argument", reqd: false}
+					]
+				});
+		dialog.set_primary_action(__("Create"), () => {
+			let key = frappe.datetime.get_datetime_as_string();
+			var val=dialog.get_values();
+			frappe.call({
+				method: 'bench_manager.bench_manager.doctype.site.site.run_default_bench_command',
+				args: {
+					method:val.method, 
+					key: key,
+				}
+			});
+			dialog.hide();
+			});
+		dialog.show();
+		});
 		frm.add_custom_button(__("Backup"), function() {
 			let key = frappe.datetime.get_datetime_as_string();
 			console_dialog(key);

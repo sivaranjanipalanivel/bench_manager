@@ -241,3 +241,16 @@ def execute_bench_command(method, key, args=None):
 		doctype="Bench Settings",
 		key=key
 	)
+
+
+@frappe.whitelist()
+def run_default_bench_command(command, key):
+	
+	commands = ["{command}".format(command=command)]
+
+	
+	frappe.enqueue('bench_manager.bench_manager.utils.run_command',
+		commands=commands,
+		doctype="Bench Settings",
+		key=key
+	)
