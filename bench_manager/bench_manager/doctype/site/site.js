@@ -114,7 +114,7 @@ frappe.ui.form.on('Site', {
 					title: 'Bench Execute',
 					fields: [
 					{fieldname: 'command', fieldtype: 'Data', label: "Command", reqd: true},
-						{fieldname: 'args', fieldtype: 'Data', label: "Argument", reqd: false}
+						
 					]
 				});
 		dialog.set_primary_action(__("Create"), () => {
