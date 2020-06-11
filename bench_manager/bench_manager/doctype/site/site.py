@@ -226,3 +226,18 @@ def create_site(site_name, install_erpnext, mysql_password, admin_password, key)
 	doc = frappe.get_doc({'doctype': 'Site', 'site_name': site_name, 'app_list':'frappe', 'developer_flag':1})
 	doc.insert()
 	frappe.db.commit()
+
+#by sivaranjani
+@frappe.whitelist()
+def execute_bench_command(method, key, args=None):
+	if args:
+		commands = ["bench execute {method} --args {args}".format(method=method, args=args)]
+	else:
+		commands = ["bench execute {method}".format(method=method)]
+
+	
+	frappe.enqueue('bench_manager.bench_manager.utils.run_command',
+		commands=commands,
+		doctype="Bench Settings",
+		key=key
+	)
